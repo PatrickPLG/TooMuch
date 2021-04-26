@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Opret varer</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <form method="post" action="/create" enctype="multipart/form-data">
+            <label id="beskrivelse" for"beskrivelse">Beskrivelse af varer:</label><br>
+            <input type="text" id="beskrivelse" name="beskrivelse" placeholder="">
+            <br>
+            <label id="udløbsdato" for"udløbsdato">Udløbsdato:</label><br>
+            <input type="text" id="udløbsdato" name="udløbsdato" placeholder="">
+            <br>
+            <label id="lokation" for"lokation">lokation:</label><br>
+            <input type="text" id="lokation" name="lokation" placeholder="">
+            <br>
+            <input type="file" name="file">
+            <br>
+            <input id="submit_button" type="submit" value="Opret">
+            <p>Du får .. point</p>
+        </form>
+        
+        <script src="" async defer></script>
+    </body>
+</html>
