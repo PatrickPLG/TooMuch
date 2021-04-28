@@ -9,7 +9,15 @@ app.secret_key = 'BAD_SECRET_KEY'
 def index():
     with sqlite3.connect("db.db") as db:
         try:
-            pass
+            cursor = db.cursor()
+            cursor.execute("SELECT * FROM Varer")
+            all_items = cursor.fetchall()
+
+            for row in all_items:
+                print(row[0])
+                print(row[1])
+                print(row[2])
+                print(row[3])
         except sqlite3.Error:
             message = "There was a problem executing the SQL statement"
             return render_template("index.html")
