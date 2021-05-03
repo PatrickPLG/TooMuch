@@ -4,6 +4,7 @@ import os
 
 app = Flask(__name__)
 app.secret_key = 'BAD_SECRET_KEY'
+goods = {}
 
 @app.route('/')
 def index():
@@ -14,14 +15,17 @@ def index():
             all_items = cursor.fetchall()
 
             for row in all_items:
-                print(row[0])
-                print(row[1])
-                print(row[2])
-                print(row[3])
+                print(row[0]) # ID
+                print(row[1]) # Beskrivelse
+                print(row[2]) # Udløbsdato
+                print(row[3]) # Lokation
+                print(row[4]) # Datastore
+                goods[str(row[0])] = [row[1],row[2],row[3],row[4]]
+            print(goods)
         except sqlite3.Error:
             message = "There was a problem executing the SQL statement"
             return render_template("index.html")
-    return render_template('index.html')
+    return render_template('index.html', goods = goods)
 
 @app.route('/create', methods=['GET', 'POST'])
 def create():

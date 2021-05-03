@@ -9,7 +9,14 @@
         <link rel="stylesheet" href="../static/main.css">
     </head>
     <body>
-        
+        {% for item in goods %}
+        <div class="good">
+            <p>{{ goods[item][0] }}</p>
+            <p>{{ goods[item][1] }}</p>
+            <p>{{ goods[item][2] }}</p>
+            <p>{{ goods[item][3] }}</p>
+        </div>
+        {% endfor %}
         
         <script src="" async defer></script>
     </body>
