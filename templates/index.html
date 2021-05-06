@@ -7,17 +7,61 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="../static/main.css">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+        <style>
+            .navbar-custom {
+                background-color: #4ABDAC;
+            }
+
+            .navbar-custom .navbar-brand,
+            .navbar-custom .navbar-text, .nav-link {
+                color: #ffffff;
+            }
+        </style>
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
+        
     </head>
     <body>
+        <nav class="navbar navbar-custom">
+            <div class="container-fluid">
+              <a class="navbar-brand">TooMuch</a>
+              <form class="d-flex">
+                <a class="nav-link" href="/create">Opret</a>
+                <a class="nav-link" href="#">Profil</a>
+                <a class="nav-link" href="#">Leaderboard</a>
+                <a class="nav-link" href="#">Butik</a>
+              </form>
+            </div>
+          </nav>
+        
         {% for item in goods %}
-        <div class="good">
-            <p>{{ goods[item][0] }}</p>
-            <p>{{ goods[item][1] }}</p>
-            <p>{{ goods[item][2] }}</p>
-            <p>{{ goods[item][3] }}</p>
+        <!-- food-item -->
+        <div class="parent">
+        <div class="food-box">
+        <div class="v10_7">
+            <div class="v10_0">
+    
+            </div>
+            <div class="v10_6" style="background-image: url('static/images/{{ goods[item][3] }}');">
+    
+            </div>
+            <span class="v11_0">{{ goods[item][0] }}</span>
+            <div class="v13_62">
+                <div class="v13_61">
+    
+                </div>
+                <span class="v13_60">1.2 km</span>
+            </div><div class="v15_18">
+                <span class="v15_10">Udløbsdato</span>
+                <span class="v15_11">{{ goods[item][1] }}</span>
+            </div>
+        </div>
+        </div>
         </div>
         {% endfor %}
         
         <script src="" async defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
     </body>
+    
 </html>

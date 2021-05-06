@@ -1,0 +1,130 @@
+
+.food-box {
+    box-sizing: border-box;
+    font-size: 14px;
+    float:left;
+    margin-top: 25px;
+    margin-left: 46px;
+}
+.v10_7 {
+width: 447px;
+height: 255px;
+background-repeat: no-repeat;
+background-position: center center;
+background-size: cover;
+opacity: 1;
+position: relative;
+top: 0px;
+left: 0px;
+overflow: hidden;
+}
+.v10_0 {
+width: 447px;
+height: 70px;
+background: rgba(247,135,51,1);
+opacity: 1;
+position: absolute;
+top: 180px;
+left: 0px;
+border-bottom-left-radius: 20px;
+border-bottom-right-radius: 20px;
+overflow: hidden;
+}
+.v10_6 {
+width: 447px;
+height: 180px;
+background-repeat: no-repeat;
+background-position: center center;
+background-size: cover;
+opacity: 1;
+position: relative;
+top: 0px;
+left: 0px;
+border-top-left-radius: 11px;
+border-top-right-radius: 11px;
+overflow: hidden;
+}
+.v11_0 {
+width: 208px;
+color: rgba(255,255,255,1);
+position: absolute;
+top: 175px;
+left: 26px;
+font-family: Roboto;
+font-weight: Regular;
+font-size: 55px;
+opacity: 1;
+text-align: left;
+}
+.v13_62 {
+width: 126px;
+height: 44px;
+background-repeat: no-repeat;
+background-position: center center;
+background-size: cover;
+opacity: 1;
+position: absolute;
+top: 0px;
+left: 321px;
+overflow: hidden;
+}
+.v13_61 {
+width: 126px;
+height: 44px;
+background: rgba(247,135,51,1);
+opacity: 1;
+position: relative;
+top: 0px;
+left: 0px;
+border-top-right-radius: 11px;
+border-bottom-left-radius: 11px;
+overflow: hidden;
+}
+.v13_60 {
+width: 109px;
+color: rgba(255,255,255,1);
+position: absolute;
+top: 0px;
+left: 9px;
+font-family: Roboto;
+font-weight: Regular;
+font-size: 36px;
+opacity: 1;
+text-align: left;
+}
+.v15_18 {
+width: 123px;
+height: 58px;
+background-repeat: no-repeat;
+background-position: center center;
+background-size: cover;
+opacity: 1;
+position: absolute;
+top: 186px;
+left: 298px;
+overflow: hidden;
+}
+.v15_10 {
+width: 123px;
+color: rgba(255,255,255,1);
+position: relative;
+top: 0px;
+left: 0px;
+font-family: Roboto;
+font-weight: Regular;
+font-size: 24px;
+opacity: 1;
+text-align: left;
+}
+.v15_11 {
+width: 64px;
+color: rgba(255,255,255,1);
+position: absolute;
+top: 30px;
+left: 29px;
+font-family: Roboto;
+font-weight: Regular;
+font-size: 24px;
+opacity: 1;
+text-align: left;
+}

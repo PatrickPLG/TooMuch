@@ -19,7 +19,7 @@ def index():
                 print(row[1]) # Beskrivelse
                 print(row[2]) # Udløbsdato
                 print(row[3]) # Lokation
-                print(row[4]) # Datastore
+                print(row[4]) # Data-image-store
                 goods[str(row[0])] = [row[1],row[2],row[3],row[4]]
             print(goods)
         except sqlite3.Error:
@@ -37,7 +37,7 @@ def create():
                 lokation = request.form.get('lokation')
 
                 file = request.files["file"]
-                file.save(os.path.join("uploads", file.filename))
+                file.save(os.path.join("static/images", file.filename))
 
                 cursor = db.cursor()
                 cursor.execute("INSERT INTO Varer (beskrivelse, udløbsdato, lokation, datastore) VALUES (?, ?, ?, ?)", (beskrivelse, udløbsdato, lokation, file.filename))
