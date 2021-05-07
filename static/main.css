@@ -128,3 +128,34 @@ font-size: 24px;
 opacity: 1;
 text-align: left;
 }
+
+
+.rectangle {
+    position: absolute;
+    width: 773px;
+    height: 104px;
+    left: 389px;
+    top: 200px;
+
+    background: #F78733;
+    border-radius: 11px;
+}
+
+.leaderboard-text {
+    position: absolute;
+    width: 714px;
+    height: 75px;
+    left: 419px;
+    top: 214px;
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 64px;
+    line-height: 75px;
+    /* identical to box height */
+
+
+    color: #FFFFFF;
+}
+
