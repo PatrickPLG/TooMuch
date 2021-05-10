@@ -130,29 +130,36 @@ text-align: left;
 }
 
 
+.leaderboard-wrapper {
+    box-sizing: border-box;
+    font-size: 14px;
+    margin-top: 25px;
+    margin-left: 46px;
+}
 .rectangle {
-    position: absolute;
     width: 773px;
     height: 104px;
-    left: 389px;
-    top: 200px;
+    left: 25%;
+    top: 25%;
+    margin-left: 20%;
 
     background: #F78733;
     border-radius: 11px;
 }
 
 .leaderboard-text {
-    position: absolute;
     width: 714px;
     height: 75px;
-    left: 419px;
-    top: 214px;
+    left: 26%;
+    top: 28%;
 
     font-family: Roboto;
     font-style: normal;
     font-weight: bold;
-    font-size: 64px;
+    font-size: 50px;
     line-height: 75px;
+    padding-top: 15px;
+    padding-left: 5px;
     /* identical to box height */
 
 

@@ -5,6 +5,7 @@ import os
 app = Flask(__name__)
 app.secret_key = 'BAD_SECRET_KEY'
 goods = {}
+leaderboard_list = {}
 
 @app.route('/')
 def index():
@@ -17,17 +18,25 @@ def index():
             all_items = cursor.fetchall()
 
             for row in all_items:
-                print(row[0]) # ID
-                print(row[1]) # Beskrivelse
-                print(row[2]) # Udløbsdato
-                print(row[3]) # Lokation
-                print(row[4]) # Data-image-store
-                goods[str(row[0])] = [row[1],row[2],row[3],row[4]]
-            print(goods)
+                goods[str(row[0])] = [row[1],row[2],row[3],row[4], row[0]]
         except sqlite3.Error:
             message = "There was a problem executing the SQL statement"
             return render_template("index.html")
     return render_template('index.html', goods = goods)
+
+@app.route('/get')
+def get_item():
+    with sqlite3.connect("db.db") as db:
+        try:
+            global goods
+            if request.method == 'POST':
+                v = request.get_json().get('val')
+                print(v)
+            return redirect("/")
+        except sqlite3.Error:
+            message = "There was a problem executing the SQL statement"
+            return redirect("/")
+    return redirect("/")
 
 @app.route('/create', methods=['GET', 'POST'])
 def create():
@@ -45,6 +54,7 @@ def create():
 
                 cursor = db.cursor()
                 cursor.execute("INSERT INTO Varer (beskrivelse, udløbsdato, lokation, datastore, seller) VALUES (?, ?, ?, ?, ?)", (beskrivelse, udløbsdato, lokation, file.filename, session['username']))
+                cursor.execute("UPDATE Person_information SET points = points + 10 WHERE username = '" + session['username'] + "'")
         except sqlite3.Error:
             message = "There was a problem executing the SQL statement"
             return render_template("create.html")
@@ -84,11 +94,19 @@ def leaderboard():
         try:
             if session.get('username') == None:
                 return render_template("login.html")
-            return render_template("leaderboard.html")
+            cursor = db.cursor()
+            cursor.execute("SELECT name,points FROM Person_information ORDER BY points DESC")
+            leaderboard = cursor.fetchall()
+
+            for row in leaderboard:
+                print(row[0])
+                print(row[1])
+                leaderboard_list[str(row[0])] = [row[0],row[1]]
+            return render_template("leaderboard.html", leaderboard_list=leaderboard_list)
         except sqlite3.Error:
             message = "There was a problem executing the SQL statement"
             return render_template("leaderboard.html")
-    return render_template("leaderboard.html")
+    return render_template("leaderboard.html", leaderboard_list=leaderboard_list)
 
 @app.route('/shop', methods=['GET', 'POST'])
 def shop():
@@ -166,6 +184,10 @@ def register():
 def logout():
     session.pop('username', default=None)
     return render_template('login.html')
+
+@app.route('/info')
+def info():
+    return render_template('info.html')
 
 
 app.run(host='0.0.0.0', port=81, debug=True)
