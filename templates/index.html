@@ -3,10 +3,12 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
+        <title>TooMuch - Katalog</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" href="../static/images/favicon.png"/>
         <link rel="stylesheet" href="../static/main.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
         <style>
             .navbar-custom {
@@ -20,18 +22,22 @@
         </style>
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet" />
         <script>
-            function get() {
-                var val = document.getElementById('goods').getAttribute('data-value');
-                console.log(val);
-                window.location.href="/get";
-                $.ajax({
+            function get(clicked_id) {
+                
+                var answer = window.confirm('Vil du have denne varer? (Opdater siden, hvis du trykker ja)')
+                if (answer) {
+                    var val = clicked_id
+                    console.log(val);
+                    $.ajax({
                     type: "POST",
                     contentType: "application/json;charset=utf-8",
-                    url: "/",
+                    url: "/get",
                     traditional: "true",
                     data: JSON.stringify({val}),
                     dataType: "json"
                     });
+
+                } 
             }
         </script>
     </head>
@@ -54,7 +60,7 @@
         {% for item in goods %}
         <!-- food-item -->
         <div class="food-box">
-        <div class="v10_7" id="goods" style="cursor: pointer;" onclick="get()" data-value="{{ goods[item][4] }}">
+        <div class="v10_7" id="{{ goods[item][4] }}" style="cursor: pointer;" onclick="get(this.id)">
             <div class="v10_0">
     
             </div>

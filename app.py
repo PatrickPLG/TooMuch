@@ -1,37 +1,48 @@
 from flask import Flask, render_template, request, redirect, session, url_for, escape, g
 import sqlite3
 import os
+import bisect
 
 app = Flask(__name__)
 app.secret_key = 'BAD_SECRET_KEY'
 goods = {}
 leaderboard_list = {}
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
     with sqlite3.connect("db.db") as db:
         try:
             if session.get('username') == None:
                 return render_template("login.html")
             cursor = db.cursor()
-            cursor.execute("SELECT * FROM Varer")
+            cursor.execute("SELECT * FROM Varer WHERE buyer = ''")
             all_items = cursor.fetchall()
 
             for row in all_items:
                 goods[str(row[0])] = [row[1],row[2],row[3],row[4], row[0]]
+
         except sqlite3.Error:
             message = "There was a problem executing the SQL statement"
             return render_template("index.html")
     return render_template('index.html', goods = goods)
 
-@app.route('/get')
+@app.route('/get', methods=['GET', 'POST'])
 def get_item():
     with sqlite3.connect("db.db") as db:
         try:
             global goods
             if request.method == 'POST':
-                v = request.get_json().get('val')
-                print(v)
+                val = request.get_json().get('val')
+                print(val)
+                for key in goods.items():
+                    print(key[0])
+                    if key[0] == val:
+                        del goods[key[0]]
+                        cursor = db.cursor()
+                        cursor.execute("UPDATE Varer SET buyer = ? WHERE id = ?", (session['username'], val))
+                        cursor.execute("UPDATE Person_information SET points = points + 10 WHERE username = '" + session['username'] + "'")
+                        cursor.execute("UPDATE Person_information SET points_overall = points_overall + 10 WHERE username = '" + session['username'] + "'")
+                        return redirect("/")
             return redirect("/")
         except sqlite3.Error:
             message = "There was a problem executing the SQL statement"
@@ -42,6 +53,12 @@ def get_item():
 def create():
     with sqlite3.connect("db.db") as db:
         try:
+            cur = db.cursor()
+            cur.execute("select * from Person_information where username = '" + session['username'] + "'")
+            personalInformation = cur.fetchall()
+
+            points_to_give = 5+(int(personalInformation[0][6])*0.7)
+            print(points_to_give)
             if session.get('username') == None:
                 return render_template("login.html")
             if request.method == 'POST':
@@ -53,12 +70,13 @@ def create():
                 file.save(os.path.join("static/images", file.filename))
 
                 cursor = db.cursor()
-                cursor.execute("INSERT INTO Varer (beskrivelse, udløbsdato, lokation, datastore, seller) VALUES (?, ?, ?, ?, ?)", (beskrivelse, udløbsdato, lokation, file.filename, session['username']))
-                cursor.execute("UPDATE Person_information SET points = points + 10 WHERE username = '" + session['username'] + "'")
+                cursor.execute("INSERT INTO Varer (beskrivelse, udløbsdato, lokation, datastore, seller, buyer) VALUES (?, ?, ?, ?, ?, '')", (beskrivelse, udløbsdato, lokation, file.filename, session['username']))
+                cursor.execute("UPDATE Person_information SET points = points + ? WHERE username = ?", (points_to_give, session['username']))
+                cursor.execute("UPDATE Person_information SET points_overall = points_overall + ? WHERE username = ?", (points_to_give, session['username']))
         except sqlite3.Error:
             message = "There was a problem executing the SQL statement"
             return render_template("create.html")
-    return render_template("create.html")
+    return render_template("create.html", points=points_to_give)
 
 @app.route('/profile', methods=['GET', 'POST'])
 def profile():
@@ -70,7 +88,11 @@ def profile():
             cur.execute("select * from Person_information where username = '" + session['username'] + "'")
             personalInformation = cur.fetchall()
 
-            
+            exp_level = [10,30,60,100,150,210,270,340,420,510,600]
+            level = bisect.bisect(exp_level, int(personalInformation[0][5]))
+
+            cur.execute("UPDATE Person_information SET level = ? WHERE username = ?", (level, session['username']))
+
 
             if request.method == 'POST':
                 name = request.form.get('navn')
@@ -82,7 +104,7 @@ def profile():
                 cur.execute("UPDATE Person_information SET name = ?, adress = ?, number = ? WHERE username = ?", (name, adress, number, session['username']))
                 return redirect("/profile")
 
-            return render_template("profile.html", personalInformation=personalInformation)
+            return render_template("profile.html", personalInformation=personalInformation, level=level)
         except sqlite3.Error:
             message = "There was a problem executing the SQL statement"
             return render_template("profile.html")
@@ -170,14 +192,13 @@ def register():
                 if valid_login == []:
                     cur = db.cursor()
                     cur.execute("INSERT INTO User(username, password) values (?,?)", (username,password))
-                    cur.execute("INSERT INTO Person_information VALUES (?, ?, ?, ?, 0)", (username, name, adress, number))
+                    cur.execute("INSERT INTO Person_information VALUES (?, ?, ?, ?, 0, 0, 1)", (username, name, adress, number))
                     
                     render_template('login.html', error=error)
                 else:
-                    error = 'Kontoen eksiterer allerede'
+                    error = 'Kontoen eksisterer allerede'
         except sqlite3.Error:
-            message = "There was a problem executing the SQL statement"
-            return render_template("register.html", error=message)
+            return render_template("register.html", error=error)
     return render_template('register.html', error=error)
 
 @app.route('/logout')

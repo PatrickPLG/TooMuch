@@ -3,9 +3,10 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Opret varer</title>
+        <title>TooMuch - Opret varer</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" type="image/png" href="../static/images/favicon.png"/>
         <script src="https://kit.fontawesome.com/9fc9fda4e4.js" crossorigin="anonymous"></script>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
         <style>
@@ -38,7 +39,7 @@
           </nav>
         <form method="post" action="/create" enctype="multipart/form-data">
             <div class="inputfields">
-                <label id="beskrivelse" for"beskrivelse">Beskrivelse af varer:</label><br>
+                <label id="beskrivelse" for"beskrivelse">Navn på varer:</label><br>
                 <input type="text" id="beskrivelseinput" name="beskrivelse" placeholder="">
                 <br>
                 <label id="udløbsdato" for"udløbsdato">Udløbsdato:</label><br>
@@ -47,14 +48,18 @@
                 <label id="lokation" for"lokation">lokation:</label><br>
                 <input type="text" id="lokationinput" name="lokation" placeholder="">
                 <br>
+                
                 <input id="submit_button" type="submit" value="Opret">
-                <p>Du får 10 point</p>
+                <p>Du får {{ points }} point</p>
+                
                 
             </div>
-            <label for="file-upload" class="custom-file-upload">
+            <label for="file" class="custom-file-upload">
                 <i class="fa fa-cloud-upload"></i> Custom Upload
+                <input id="file" type="file" name="file"/>
             </label>
-            <input id="file-upload" type="file"/>
+            
+            
             <br>
         </form>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8" crossorigin="anonymous"></script>
